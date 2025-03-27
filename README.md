@@ -32,7 +32,7 @@ Posts are converted into vector embeddings using VoyageAI when created. This all
 ```typescript
 // Using VoyageAI to generate embeddings
 const embeddings = new VoyageEmbeddings({
-  apiKey: process.env.VOYAGE_API_KEY,
+  apiKey: config.VOYAGE_API_KEY,
   inputType: "query",
 });
 
@@ -71,6 +71,14 @@ const result = await ctx.vectorSearch("posts", "by_user_id", {
 });
 ```
 
+### Filter more relevant posts
+
+Find most relevant posts among all similar posts:
+
+```typescript
+const filteredResults = result.filter((r) => r._score >= 0.7);
+```
+
 ## Setup
 
 1. Clone the repository:
@@ -83,7 +91,7 @@ cd convex-app
 2. Install dependencies:
 
 ```bash
-npm install
+yarn install
 ```
 
 3. Create a `config.ts` file in the root directory:
@@ -102,15 +110,7 @@ npx convex dev
 5. Start the development server:
 
 ```bash
-npm run dev
-```
-
-## Environment Variables
-
-Create a `.env.local` file:
-
-```
-VOYAGE_API_KEY=your_voyage_api_key_here
+yarn dev
 ```
 
 ## Project Structure
@@ -142,10 +142,6 @@ convex-app/
 3. **View Recommendations**
    - Click on any post to view details
    - Similar posts are automatically displayed below
-
-## License
-
-MIT
 
 ## Contributing
 
