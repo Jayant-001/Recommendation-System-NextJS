@@ -62,6 +62,7 @@ const Page = () => {
     const filteredPosts = await searchPosts({
       searchQuery: searchQuery as string,
     });
+    // console.log(filteredPosts);
     setPosts(filteredPosts);
   };
 

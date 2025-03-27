@@ -116,7 +116,7 @@ export const similarPosts = action({
 
     const result = await ctx.vectorSearch("posts", "by_user_id", {
       vector: embeddings,
-      limit: 5,
+      limit: 3,
       filter: (q) => q.eq("user_id", args.user_id),
     });
 
@@ -153,12 +153,13 @@ export const getSimilarPostsById = action({
 
     const result = await ctx.vectorSearch("posts", "by_user_id", {
       vector: embeddings,
-      limit: 6,
       filter: (q) => q.eq("user_id", post.user_id),
     });
 
     // Filter out the original post
-    const filteredResults = result.filter((r) => r._id !== args.post_id);
+    const filteredResults = result.filter(
+      (r) => r._id !== args.post_id && r._score >= 0.7,
+    );
 
     // Take only 5 results
     const postIds = filteredResults.slice(0, 5).map((r) => r._id);
@@ -198,7 +199,9 @@ export const searchPosts = action({
       vector: embeddings,
     });
 
-    const postIds = result.map((r) => r._id);
+    const filteredResults = result.filter((r) => r._score >= 0.7);
+
+    const postIds = filteredResults.map((r) => r._id);
 
     const posts: Array<Doc<"posts">> = await ctx.runQuery(
       internal.posts.fetchPostsData,
