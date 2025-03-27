@@ -2,6 +2,8 @@
 
 A modern web application that demonstrates intelligent post recommendations using vector embeddings and similarity search.
 
+![Project screenshot](https://github.com/Jayant-001/Recommendation-System-NextJS/blob/main/public/screenshot.png?raw=true)
+
 ## Overview
 
 This project is a full-stack application that allows users to create, search, and discover related posts using AI-powered recommendations. It leverages vector embeddings to understand the semantic meaning of posts and provides similar content suggestions.
